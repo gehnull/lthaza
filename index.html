@@ -184,22 +184,29 @@ h1{
   // 모바일: 누르려는 순간 도망
   noBtn.addEventListener("touchstart", (e) => {
     e.preventDefault();
+    
+    noCount++;
+    if (noCount >= 7) {
+      showNextScene();
+      return;
+    }
+    
     moveNo();
   }, { passive:false });
 
   // 클릭도 방지
   noBtn.addEventListener("click", (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  noCount++; // ✅ 클릭 수 증가
+    noCount++; // ✅ 클릭 수 증가
 
-  if (noCount >= 7) {
-    showNextScene(); // ✅ 같은 페이지 전환
-    return;
-  }
+    if (noCount >= 7) {
+      showNextScene(); // ✅ 같은 페이지 전환
+      return;
+    }
 
-  moveNo();
-});
+    moveNo();
+  });
 
 
 })();
