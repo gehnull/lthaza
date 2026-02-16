@@ -119,6 +119,7 @@ h1{
   const btnArea = document.getElementById("btnArea") || document.querySelector(".btn-container");
   const result = document.getElementById("result");
   const title = document.querySelector(".card h1"); // ✅ 추가
+  let noCount = 0; // ⭐ 이거 추가
 
   if (!yesBtn || !noBtn || !btnArea) return;
 
