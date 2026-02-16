@@ -39,7 +39,7 @@ body{
   text-align:center;
   box-shadow:0 15px 40px rgba(0,0,0,.25);
   position:relative;
-  z-index:10; /* ✅ 클릭 안 막히게 */
+  z-index:10;
 }
 
 h1{
@@ -53,7 +53,7 @@ h1{
   width:280px;
   height:56px;
   margin:0 auto;
-  touch-action: manipulation; /* ✅ 모바일 탭 반응 개선 */
+  touch-action: manipulation;
 }
 
 .btn{
@@ -66,8 +66,6 @@ h1{
   font-size:16px;
   cursor:pointer;
   user-select:none;
-  z-index:20;            /* ✅ 클릭 안 막히게 */
-  pointer-events:auto;   /* ✅ 클릭 안 막히게 */
   transition: transform .15s ease;
 }
 
@@ -99,42 +97,43 @@ h1{
 </head>
 
 <body>
-  <div class="card">
-    <h1>
-      저희 제법 연인 같나요 ?
-    </h1>
+<div class="card">
+  <h1>저희 제법 커플 같나요 ?</h1>
 
-    <div class="btn-container" id="btnArea">
-      <button class="btn yes" id="yesBtn" type="button">Yes</button>
-      <button class="btn no" id="noBtn" type="button">No</button>
-    </div>
-
-    <div class="result" id="result"> 그렇다면 린턍합시당 </div>
+  <div class="btn-container" id="btnArea">
+    <button class="btn yes" id="yesBtn">Yes</button>
+    <button class="btn no" id="noBtn">No</button>
   </div>
+
+  <div class="result" id="result"> 그렇다면 린턍합시당 </div>
+</div>
 
 <script>
 (function () {
-  const yesBtn = document.getElementById("yesBtn") || document.querySelector(".yes");
-  const noBtn  = document.getElementById("noBtn")  || document.querySelector(".no");
-  const btnArea = document.getElementById("btnArea") || document.querySelector(".btn-container");
+
+  const yesBtn = document.getElementById("yesBtn");
+  const noBtn = document.getElementById("noBtn");
+  const btnArea = document.getElementById("btnArea");
   const result = document.getElementById("result");
-  const title = document.querySelector(".card h1"); // ✅ 추가
-  let noCount = 0; // ⭐ 이거 추가
+  const title = document.querySelector(".card h1");
+
+  let noCount = 0;
 
   if (!yesBtn || !noBtn || !btnArea) return;
 
+  // YES 버튼
   yesBtn.addEventListener("click", () => {
     document.body.style.backgroundImage =
       'linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url("09.jpg")';
 
-    // ✅ 여기 2줄 추가: 질문/버튼 숨기기
     if (title) title.style.display = "none";
     btnArea.style.display = "none";
 
-    if (result) result.style.display = "block";
+    result.style.display = "block";
     createHearts();
   });
 
+  // 이모지 효과
   function createHearts(){
     for(let i=0;i<20;i++){
       const h=document.createElement("div");
@@ -147,67 +146,63 @@ h1{
     }
   }
 
+  // NO 버튼 이동
   function moveNo(){
-    const w = noBtn.offsetWidth || 120;
-    const h = noBtn.offsetHeight || 48;
+    const w = noBtn.offsetWidth;
+    const h = noBtn.offsetHeight;
     const maxX = btnArea.clientWidth - w;
     const maxY = btnArea.clientHeight - h;
 
-    const x = Math.max(0, Math.random()*maxX);
-    const y = Math.max(0, Math.random()*maxY);
-
-    noBtn.style.left = x + "px";
-    noBtn.style.top  = y + "px";
+    noBtn.style.left = (Math.random()*maxX) + "px";
+    noBtn.style.top  = (Math.random()*maxY) + "px";
   }
+
+  // 7번 후 화면 전환
   function showNextScene(){
-  // 배경 변경
-  document.body.style.backgroundImage =
-    'linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url("10.png")';
+    document.body.style.backgroundImage =
+      'linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)), url("10.png")';
 
-  // 카드 내용 전체 변경
-  document.querySelector(".card").innerHTML = `
-    <div style="
-      font-size:28px;
-      font-weight:700;
-      line-height:1.6;
-      color:#111827;
-    ">
-      하아니여러분안어색해요왜자꾸어색하다그러는거야안어색해요어색해우리?(아이안어색해)아이안어색해,어색해보여요?아나진짜궁금해서그래우리어색해보여?(아니안어색한데)진짜안어색한데어색해보이나?되게안어색하지않았어?요?어색해?나는너무,나,지금좀너무편한데(안어색해)아니이게막말이없어졌다고이게어색게아니에요여러분우리가말을많이해서그래우리가지쳐서지쳐서그래(우리조합이낯설대우리조합이낯설,낯설이유가있나?)아왜냐면은영균이랑재윤이는그렇게둘이막많이한게있잖아근데우리는사실둘이서뭔가많이한적없긴,없기는해
-    </div>
-  `;
-}
+    document.querySelector(".card").innerHTML = `
+      <div style="
+        font-size:28px;
+        font-weight:700;
+        line-height:1.6;
+        color:#111827;">
+        하아니여러분안어색해요왜자꾸어색하다그러는거 <br>
+        야안어색해요어색해우리?(아이안어색해)아이안 <br>
+        어색해,어색해보여요?아나진짜궁금해서그래우리 <br>
+        어색해보여?(아니안어색한데)진짜안어색한데어색 <br>
+        해보이나?되게안어색하지않았어?요?어색해?나는너 <br>
+        무,나,지금좀너무편한데(안어색해)아니이게막말이 <br>
+        없어졌다고이게어색게아니에요여러분우리가말을많 <br>
+        이해서그래우리가지쳐서지쳐서그래(우리조합이낯설 <br>
+        대우리조합이낯설,낯설이유가있나?)아왜냐면은영 <br>
+        균이랑재윤이는그렇게둘이막많이한게있잖아근데우 <br>
+        리는사실둘이서뭔가많이한적없긴,없기는해
+      </div>
+    `;
+  }
 
-
-  // PC: 올리면 도망
-  noBtn.addEventListener("mouseenter", moveNo);
-
-  // 모바일: 누르려는 순간 도망
-  noBtn.addEventListener("touchstart", (e) => {
+  // NO 공통 처리 (🔥 핵심)
+  function handleNoAction(e){
     e.preventDefault();
-    
+
     noCount++;
-    if (noCount >= 7) {
+
+    if (noCount >= 7){
       showNextScene();
       return;
     }
-    
-    moveNo();
-  }, { passive:false });
-
-  // 클릭도 방지
-  noBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-
-    noCount++; // ✅ 클릭 수 증가
-
-    if (noCount >= 7) {
-      showNextScene(); // ✅ 같은 페이지 전환
-      return;
-    }
 
     moveNo();
-  });
+  }
 
+  // PC
+  noBtn.addEventListener("mouseenter", moveNo);
+  noBtn.addEventListener("click", handleNoAction);
+
+  // 모바일
+  noBtn.addEventListener("touchstart", handleNoAction, { passive:false });
 
 })();
 </script>
